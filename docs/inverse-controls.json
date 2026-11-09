@@ -1,10 +1,184 @@
 [
- {"name":"Thirteen zero-cost paths: target four cells","input":{"alignment":{"x":[0,0,0],"y":[0,0,0],"gamma":1},"target":4}},
- {"name":"Stretched pulse: interior target","input":{"alignment":{"x":[0,1,0],"y":[0,0,1,0],"gamma":0.6},"target":5}},
- {"name":"Too short within bounded penalty","input":{"alignment":{"x":[0,0,0],"y":[0,0,0],"gamma":1},"target":3}},
- {"name":"Too long even with a reward","input":{"alignment":{"x":[0,0,0],"y":[0,0,0],"gamma":1},"target":6}},
- {"name":"One row: penalty is unidentifiable","input":{"alignment":{"x":[0],"y":[0,0,0],"gamma":1},"target":3}},
- {"name":"One row: impossible expected length","input":{"alignment":{"x":[0],"y":[0,0,0],"gamma":1},"target":4}},
- {"name":"Largest zero-cost grid: target ten cells","input":{"alignment":{"x":[0,0,0,0,0,0,0],"y":[0,0,0,0,0,0,0],"gamma":1},"target":10}},
- {"name":"Low temperature: concentrated but not unique","input":{"alignment":{"x":[-8,8],"y":[-8,8],"gamma":0.05},"target":2}}
+  {
+    "name": "Thirteen zero-cost paths: target four cells",
+    "input": {
+      "alignment": {
+        "x": [
+          0,
+          0,
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0
+        ],
+        "gamma": 1
+      },
+      "target": 4
+    }
+  },
+  {
+    "name": "Stretched pulse: interior target",
+    "input": {
+      "alignment": {
+        "x": [
+          0,
+          1,
+          0
+        ],
+        "y": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "gamma": 0.6
+      },
+      "target": 5
+    }
+  },
+  {
+    "name": "Too short within bounded penalty",
+    "input": {
+      "alignment": {
+        "x": [
+          0,
+          0,
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0
+        ],
+        "gamma": 1
+      },
+      "target": 3
+    }
+  },
+  {
+    "name": "Too long even with a reward",
+    "input": {
+      "alignment": {
+        "x": [
+          0,
+          0,
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0
+        ],
+        "gamma": 1
+      },
+      "target": 6
+    }
+  },
+  {
+    "name": "One row: penalty is unidentifiable",
+    "input": {
+      "alignment": {
+        "x": [
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0
+        ],
+        "gamma": 1
+      },
+      "target": 3
+    }
+  },
+  {
+    "name": "One row: impossible expected length",
+    "input": {
+      "alignment": {
+        "x": [
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0
+        ],
+        "gamma": 1
+      },
+      "target": 4
+    }
+  },
+  {
+    "name": "Largest zero-cost grid: target ten cells",
+    "input": {
+      "alignment": {
+        "x": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gamma": 1
+      },
+      "target": 10
+    }
+  },
+  {
+    "name": "Low temperature: concentrated but not unique",
+    "input": {
+      "alignment": {
+        "x": [
+          -8,
+          8
+        ],
+        "y": [
+          -8,
+          8
+        ],
+        "gamma": 0.05
+      },
+      "target": 2
+    }
+  },
+  {
+    "name": "Narrow bracket, larger mean residual",
+    "input": {
+      "alignment": {
+        "x": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "y": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "gamma": 0.05
+      },
+      "target": 10.1234
+    }
+  }
 ]

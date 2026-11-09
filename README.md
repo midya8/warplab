@@ -80,3 +80,7 @@ The second inspector, `docs/lengths.html`, separates the Gibbs law into every le
 - [Romain Tavenard's notes](https://rtavenar.github.io/ml4ts_ensai/contents/align/softdtw.html) and [tslearn documentation](https://tslearn.readthedocs.io/en/stable/gen_modules/metrics/tslearn.metrics.SoftDTWLossPyTorch.html): teaching/library context, with the primary-paper caveat above.
 
 Original implementation and experiment interface by Midya Rahmani. MIT license. Synthetic examples only.
+
+## Inverse expected-length response
+
+The [inverse inspector](https://midya8.github.io/warplab/inverse.html) asks whether a bounded penalty can attain a target expected visited-cell count. Inspect finite endpoint reachability, single-length unidentifiability, numerical flattening, the full bisection trace and each sampled length law. A separate complete-path oracle checks every witness point without calling the solver. Width stops and actual mean residuals stay distinct; this is numerical evidence, not interval arithmetic or a unique-parameter certificate. [Contract, statuses and reproduction](INVERSE.md).

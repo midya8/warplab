@@ -21,6 +21,8 @@ class InverseTests(unittest.TestCase):
   with patch('warplab.inverse.solve_inverse',side_effect=AssertionError('generator forbidden')),patch('warplab.inverse.length_atlas',side_effect=AssertionError('length DP forbidden')):self.assertTrue(verify_inverse(r))
  def test_numerically_flat_not_unique(self):
   r=solve_inverse(CONTROLS[7]['input']);self.assertEqual(r['status'],'numerically_flat');self.assertGreater(len(r['legal_lengths']),1);self.assertTrue(verify_inverse(r))
+ def test_width_stop_does_not_claim_residual_stop(self):
+  r=solve_inverse(CONTROLS[8]['input']);self.assertEqual(r['status'],'bracket_width');self.assertGreater(abs(r['residual']),TOL);self.assertLessEqual(r['trace'][-1]['upper']-r['trace'][-1]['lower'],1e-9);self.assertTrue(verify_inverse(r))
  def test_forgery(self):
   base=solve_inverse(CONTROLS[0]['input'])
   mutations=[lambda r:r.update(status='unidentifiable'),lambda r:r['trace'][0].update(lower=-3),lambda r:r['trace'][0].update(mean=99),lambda r:r.update(trace=r['trace'][:-1]),lambda r:r['selected'].update(derivative=1),lambda r:r.update(extra=True),lambda r:r['trace'].append(r['trace'][-1])]

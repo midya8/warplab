@@ -1,0 +1,10 @@
+[
+ {"name":"Length multiplicity, no penalty","input":{"alignment":{"x":[0,0,0],"y":[0,0,0],"gamma":1},"penalty":0}},
+ {"name":"Pay for visited cells","input":{"alignment":{"x":[0,0,0],"y":[0,0,0],"gamma":1},"penalty":2}},
+ {"name":"Reward visited cells","input":{"alignment":{"x":[0,0,0],"y":[0,0,0],"gamma":1},"penalty":-2}},
+ {"name":"Stretched pulse","input":{"alignment":{"x":[0,1,0],"y":[0,0,1,0],"gamma":0.6},"penalty":0.5}},
+ {"name":"One legal path","input":{"alignment":{"x":[1],"y":[0,1,2,1],"gamma":0.7},"penalty":-4}},
+ {"name":"All 8,989 paths by length","input":{"alignment":{"x":[0,0,0,0,0,0,0],"y":[0,0,0,0,0,0,0],"gamma":1},"penalty":0}},
+ {"name":"Concentrated low-temperature law","input":{"alignment":{"x":[8,8,8],"y":[-8,-8,-8,-8],"gamma":0.05},"penalty":4}},
+ {"name":"Diffuse unequal-length law","input":{"alignment":{"x":[0,1,2,1],"y":[0,0.5,1.5,2,1],"gamma":8},"penalty":-0.5}}
+]

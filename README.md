@@ -66,6 +66,12 @@ Python tests compare dynamic messages to exhaustive paths, check conservation, s
 
 JavaScript tests compare 168 complete Python/JavaScript reports and pass both versions through the independent Python oracle. A second direct path check recovers all occupancies and edges from path probabilities. Chrome tests use the real page at 320, 390 and 1280 pixels, inspect cells, switch layers and complete paths, exercise row/column selectors, verify hard-path selection, export and stale/error clearing. CI runs Python 3.10, 3.11, 3.12 and 3.13 plus Node 22/Chrome.
 
+## Exact path-length atlas
+
+The second inspector, `docs/lengths.html`, separates the Gibbs law into every legal visited-cell count. Inspect conditional occupancies/edge flows, exact per-length path counts and hard minima, conditional sequence gradients and the entropy chain rule. An explicit per-cell penalty changes only the length mixture, not the conditional laws. Its score gradient is expected length and its curvature is negative length variance divided by temperature. This changes the objective, not algorithm quality.
+
+`warplab lengths request.json -o atlas.json` generates the separate `warplab-lengths-v1` certificate; `warplab verify-lengths atlas.json` checks it by independently grouping complete paths and directly evaluating the penalized path law. The request wraps the base input as `alignment` and adds optional `penalty` in [-4,4]. Base certificate and bounds remain unchanged. See [LENGTHS.md](LENGTHS.md) for exact conventions and derivations.
+
 ## Sources and credit
 
 - [Cuturi & Blondel, ICML 2017](https://proceedings.mlr.press/v70/cuturi17a.html), [paper](https://proceedings.mlr.press/v70/cuturi17a/cuturi17a.pdf): soft-DTW and differentiable expected alignments.

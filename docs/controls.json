@@ -1,0 +1,10 @@
+[
+ {"name":"Stretched pulse","input":{"x":[0,1,0],"y":[0,0,1,0],"gamma":0.6}},
+ {"name":"Negative self-score","input":{"x":[0,0,0],"y":[0,0,0],"gamma":1}},
+ {"name":"Sharp alignment","input":{"x":[0,1,2,1],"y":[0,0.5,1.5,2,1],"gamma":0.05}},
+ {"name":"Diffuse alignment","input":{"x":[0,1,2,1],"y":[0,0.5,1.5,2,1],"gamma":8}},
+ {"name":"One legal path","input":{"x":[1],"y":[0,1,2,1],"gamma":0.7}},
+ {"name":"All 8,989 paths tie","input":{"x":[0,0,0,0,0,0,0],"y":[0,0,0,0,0,0,0],"gamma":1}},
+ {"name":"Underflow stress","input":{"x":[8,8,8],"y":[-8,-8,-8,-8],"gamma":0.05}},
+ {"name":"Signed perturbation","input":{"x":[-1,0,1],"y":[-1,1],"gamma":0.4,"direction":[[1,-2],[0.5,1],[-1,2]]}}
+]

@@ -10,3 +10,5 @@ cd "$tmp"
 "$tmp/env/bin/python" "$root/tools/verify_installed.py" "$root/docs/controls.json" "$tmp/env/bin/warplab"
 
 "$tmp/env/bin/python" "$root/tools/verify_lengths_installed.py" "$root/docs/length-controls.json" "$tmp/env/bin/warplab"
+
+"$tmp/env/bin/python" "$root/tools/verify_inverse_installed.py" "$root/docs/inverse-controls.json" "$tmp/env/bin/warplab"

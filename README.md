@@ -1,12 +1,20 @@
 # WarpLab
 
-**Differentiable sequence alignment you can inspect, perturb, and independently verify.**
-
 WarpLab implements established soft-DTW mathematics in dependency-free scalar Python and browser JavaScript. Stable forward/backward messages expose every cell occupancy and edge flow. Directional expectation messages give cost Hessian-vector products without an autodiff library. A separate exhaustive path oracle checks the complete report.
 
 This is a bounded mathematical instrument, not a trained model, performance benchmark, new alignment algorithm, or production-scale library.
 
-## What to inspect
+## Choose a calculation
+
+| Question | Inspector | CLI / contract |
+| --- | --- | --- |
+| Which cells and edges carry alignment probability, and how does the score change? | [Alignment](https://midya8.github.io/warplab/) | `analyze` / [CONTRACT.md](CONTRACT.md) |
+| How do paths of different lengths contribute, and what does a per-cell penalty change? | [Length atlas](https://midya8.github.io/warplab/lengths.html) | `lengths` / [LENGTHS.md](LENGTHS.md) |
+| Can a penalty in [-4,4] attain a target expected visited-cell count? | [Inverse response](https://midya8.github.io/warplab/inverse.html) | `inverse` / [INVERSE.md](INVERSE.md) |
+
+The penalty changes the objective, not alignment quality. A small penalty bracket and a small mean residual are separate outcomes; neither is an interval-arithmetic certificate or proof of a unique parameter.
+
+## Alignment report
 
 - Raw soft-DTW, hard minimum, exact hard-tie count and a canonical minimum path.
 - Gibbs probabilities for every monotone path, with a complete-path slider.
@@ -16,7 +24,7 @@ This is a bounded mathematical instrument, not a trained model, performance benc
 - Strict versioned JSON certificates, atomic CLI output and an independent verifier.
 - Responsive controls, accessible row/column selectors, layer switching and certificate export.
 
-Run `python -m http.server 8000 --directory docs` and open `http://localhost:8000` for the inspector. All computation stays in the browser. There are no external model calls, keys, downloads or paid services.
+Run `python -m http.server 8000 --directory docs` and open `http://localhost:8000` for the inspector. All computation stays in the browser. There are no external model calls, keys, model downloads or paid services.
 
 ## Reproduce
 
@@ -36,9 +44,9 @@ warplab verify certificate.json
 python -m warplab verify certificate.json
 ```
 
-`analyze` and `verify` accept `-` for stdin. Inputs are capped at 4 MiB; duplicate keys, nonfinite values, booleans as numbers, unknown fields and unsupported shapes are rejected. Existing output survives failed requests. The wheel check installs in a fresh environment and runs module and console commands outside the checkout for all eight controls.
+`analyze` and `verify` accept `-` for stdin. Inputs are capped at 4 MiB; duplicate keys, nonfinite values, booleans as numbers, unknown fields and unsupported shapes are rejected. Existing output survives failed requests. The wheel check installs in a fresh environment and runs module and console commands outside the checkout for eight alignment controls, eight length controls and nine inverse controls.
 
-## Controls that expose the model
+## Alignment controls
 
 | Experiment | What it checks |
 | --- | --- |
@@ -60,17 +68,25 @@ The hard control compares **exact rational sums of binary64 local cost entries**
 
 The self-corrected divergence is deliberately absent. The 2021 paper's nonnegativity theorem depends on the ground cost; it does not prove the plain squared-Euclidean case used here. Broad statements in library/teaching docs do not replace that theorem's assumptions. See [CONTRACT.md](CONTRACT.md).
 
-## Verification, not screenshots alone
+## Verification
 
 Python tests compare dynamic messages to exhaustive paths, check conservation, soft-min bounds, transpose/scaling identities, coordinate and temperature finite differences, Hessian-vector finite differences and Hessian symmetry, singleton and maximum path spaces, forged certificates, input rejection and CLI atomicity. The verifier still works with generator functions disabled.
 
 JavaScript tests compare 168 complete Python/JavaScript reports and pass both versions through the independent Python oracle. A second direct path check recovers all occupancies and edges from path probabilities. Chrome tests use the real page at 320, 390 and 1280 pixels, inspect cells, switch layers and complete paths, exercise row/column selectors, verify hard-path selection, export and stale/error clearing. CI runs Python 3.10, 3.11, 3.12 and 3.13 plus Node 22/Chrome.
 
-## Exact path-length atlas
+## Length atlas
 
-The second inspector, `docs/lengths.html`, separates the Gibbs law into every legal visited-cell count. Inspect conditional occupancies/edge flows, exact per-length path counts and hard minima, conditional sequence gradients and the entropy chain rule. An explicit per-cell penalty changes only the length mixture, not the conditional laws. Its score gradient is expected length and its curvature is negative length variance divided by temperature. This changes the objective, not algorithm quality.
+The [length inspector](https://midya8.github.io/warplab/lengths.html) separates the Gibbs law into every legal visited-cell count. It reports conditional occupancies and edge flows, exact per-length path counts and hard minima, conditional sequence gradients and the entropy chain rule. A per-cell penalty changes only the length mixture, not the conditional laws. The score's penalty gradient is expected length; its curvature is negative length variance divided by temperature.
 
-`warplab lengths request.json -o atlas.json` generates the separate `warplab-lengths-v1` certificate; `warplab verify-lengths atlas.json` checks it by independently grouping complete paths and directly evaluating the penalized path law. The request wraps the base input as `alignment` and adds optional `penalty` in [-4,4]. Base certificate and bounds remain unchanged. See [LENGTHS.md](LENGTHS.md) for exact conventions and derivations.
+`warplab lengths request.json -o atlas.json` emits `warplab-lengths-v1`; `warplab verify-lengths atlas.json` independently groups complete paths and evaluates the penalized path law. The request wraps the base input as `alignment` and adds optional `penalty` in [-4,4]. The embedded base certificate and its bounds are unchanged. [Conventions and derivations](LENGTHS.md).
+
+## Inverse response
+
+The [inverse inspector](https://midya8.github.io/warplab/inverse.html) checks finite endpoint reachability before searching for a penalty. It retains single-length unidentifiability, numerical flattening, every bisection decision and each sampled length law. Targets are in [1,13]; a target outside the finite endpoint response range is a reported outcome, not an invalid request.
+
+`warplab inverse request.json -o witness.json` emits `warplab-inverse-v1`; `warplab verify-inverse witness.json` independently evaluates complete paths at every witness penalty without calling the solver. The request has `alignment` and `target`. Absolute mean tolerance and pre-update penalty-width tolerance are both 1e-9, with at most 40 midpoint evaluations. A width stop need not satisfy mean tolerance; inspect the selected point's actual residual. [Statuses, fixed policy and reproduction](INVERSE.md).
+
+The length tests compare 98 complete Python/JavaScript atlases and verify both independently. Inverse tests cover endpoint matches, unreachable and flat responses, random interior targets, monotonicity, derivatives, forgeries and generator-disabled verification. Chrome tests exercise all three inspectors at 320, 390 and 1280 pixels, including length cards, witness selection, export and stale/error clearing. The exhaustive checks are bounded to 8,989 paths and use explicit floating-point tolerances, not formal proof.
 
 ## Sources and credit
 
@@ -80,7 +96,3 @@ The second inspector, `docs/lengths.html`, separates the Gibbs law into every le
 - [Romain Tavenard's notes](https://rtavenar.github.io/ml4ts_ensai/contents/align/softdtw.html) and [tslearn documentation](https://tslearn.readthedocs.io/en/stable/gen_modules/metrics/tslearn.metrics.SoftDTWLossPyTorch.html): teaching/library context, with the primary-paper caveat above.
 
 Original implementation and experiment interface by Midya Rahmani. MIT license. Synthetic examples only.
-
-## Inverse expected-length response
-
-The [inverse inspector](https://midya8.github.io/warplab/inverse.html) asks whether a bounded penalty can attain a target expected visited-cell count. Inspect finite endpoint reachability, single-length unidentifiability, numerical flattening, the full bisection trace and each sampled length law. A separate complete-path oracle checks every witness point without calling the solver. Width stops and actual mean residuals stay distinct; this is numerical evidence, not interval arithmetic or a unique-parameter certificate. [Contract, statuses and reproduction](INVERSE.md).
